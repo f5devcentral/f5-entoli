@@ -1,0 +1,8 @@
+---
+
+  # entoli config document
+  # if bigiq object is found (address or hostname are required to define endpoint)
+  bigiq: 
+    address: '10.200.244.15'
+  
+  # if bigiq object not found, default to looking for devices folder with device declarations (hostname1.do.json)
