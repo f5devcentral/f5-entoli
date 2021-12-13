@@ -1,25 +1,27 @@
 import {Command, flags} from '@oclif/command'
 
+
+/**
+ * 
+ enoli declare (aliases: up/deploy)
+
+  base command should deploy repo via f5 ATC service declarations
+ */
+
 export default class Declare extends Command {
-  static description = 'describe the command here'
+  static description = 'declare environment via AS3/DO'
+  static aliases = ['up', 'deploy']
 
   static flags = {
     help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
   }
-
-  static args = [{name: 'file'}]
 
   async run() {
     const {args, flags} = this.parse(Declare)
 
-    const name = flags.name ?? 'world'
-    this.log(`hello ${name} from /home/ted/projects/f5-entoli/src/commands/declare.ts`)
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`)
-    }
+    // read config file enotoli.yml
+    // assume we are deploying through bigiq
+    // 
+
   }
 }

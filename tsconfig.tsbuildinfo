@@ -757,8 +757,18 @@
         "affectsGlobalScope": false
       },
       "./src/routes.ts": {
-        "version": "bf199538e545239c284d28df466871d63f9dc2507cddee3d15303beb64b263a1",
+        "version": "6def2b8a92983064c77dbb2b76d9170551cfccbbf772d481763450e5028e40df",
         "signature": "884725edd59dc02d6368350a9e630ff67f5f338bca118feb16cef44cab8955d2",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/fs-extra/index.d.ts": {
+        "version": "ed19da84b7dbf00952ad0b98ce5c194f1903bcf7c94d8103e8e0d63b271543ae",
+        "signature": "ed19da84b7dbf00952ad0b98ce5c194f1903bcf7c94d8103e8e0d63b271543ae",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/as3.ts": {
+        "version": "2e3b39742ba0c832cf3f86d8a2ef9da3d7dccc1a018fe48cc29abffdb5ee722c",
+        "signature": "343a3e1ee66a8f23864e76d3bdf629a1c01325d9a4a11b6113b9d83c369ecab5",
         "affectsGlobalScope": false
       },
       "./node_modules/cli-ux/lib/action/base.d.ts": {
@@ -821,9 +831,14 @@
         "signature": "0082a011ccbec09b7438da546254cbe5abdd2cca5a1824e3c5e492769ab15d12",
         "affectsGlobalScope": false
       },
+      "./src/commands/declare.ts": {
+        "version": "5213a43c52f06146ec4675a4ddc2c470dc35157cb034d996e589d9c41d0ed884",
+        "signature": "44d1ad5aa8fa2aa9892cc0727112d3d8ba7a5c9e7669741c2ae0d82b4948aae4",
+        "affectsGlobalScope": false
+      },
       "./src/commands/disconnect.ts": {
-        "version": "57fd0b649b11901c86e1ef98491598d84900ce20566edde8c0dc3fa623259f64",
-        "signature": "7562911811c1b352c21f8ad6cbe01fa98d9031a3611bf49322db05bef77ee9db",
+        "version": "ac092feb363acf35de08ed6b58df2b2a2aac15ba862f90cd5d3666aa74f7ad59",
+        "signature": "03fc16208f5dcc27223f548b5106f5037e5453f6b5176d6dc61d1870c803af98",
         "affectsGlobalScope": false
       },
       "./src/commands/hello.ts": {
@@ -1091,6 +1106,10 @@
         "./node_modules/@types/qs/index.d.ts",
         "./node_modules/@types/serve-static/index.d.ts"
       ],
+      "./node_modules/@types/fs-extra/index.d.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/index.d.ts"
+      ],
       "./node_modules/@types/glob/index.d.ts": [
         "./node_modules/@types/minimatch/index.d.ts",
         "./node_modules/@types/node/events.d.ts",
@@ -1587,10 +1606,21 @@
         "./node_modules/f5-conx-core/dist/bigip/f5Client.d.ts",
         "./node_modules/f5-conx-core/dist/bigip/mgmtClient.d.ts"
       ],
+      "./src/commands/as3.ts": [
+        "./node_modules/@oclif/command/lib/index.d.ts",
+        "./node_modules/@types/fs-extra/index.d.ts",
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/path.d.ts",
+        "./node_modules/tslib/tslib.d.ts"
+      ],
       "./src/commands/connect.ts": [
         "./node_modules/@oclif/command/lib/index.d.ts",
         "./node_modules/@types/node/child_process.d.ts",
         "./node_modules/cli-ux/lib/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts"
+      ],
+      "./src/commands/declare.ts": [
+        "./node_modules/@oclif/command/lib/index.d.ts",
         "./node_modules/tslib/tslib.d.ts"
       ],
       "./src/commands/disconnect.ts": [
@@ -1778,6 +1808,10 @@
         "./node_modules/@types/qs/index.d.ts",
         "./node_modules/@types/serve-static/index.d.ts"
       ],
+      "./node_modules/@types/fs-extra/index.d.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/index.d.ts"
+      ],
       "./node_modules/@types/glob/index.d.ts": [
         "./node_modules/@types/minimatch/index.d.ts",
         "./node_modules/@types/node/events.d.ts",
@@ -2274,7 +2308,15 @@
         "./node_modules/f5-conx-core/dist/bigip/f5Client.d.ts",
         "./node_modules/f5-conx-core/dist/bigip/mgmtClient.d.ts"
       ],
+      "./src/commands/as3.ts": [
+        "./node_modules/@oclif/command/lib/index.d.ts",
+        "./node_modules/@oclif/parser/lib/flags.d.ts"
+      ],
       "./src/commands/connect.ts": [
+        "./node_modules/@oclif/command/lib/index.d.ts",
+        "./node_modules/@oclif/parser/lib/flags.d.ts"
+      ],
+      "./src/commands/declare.ts": [
         "./node_modules/@oclif/command/lib/index.d.ts",
         "./node_modules/@oclif/parser/lib/flags.d.ts"
       ],
@@ -2349,6 +2391,7 @@
       "./node_modules/@types/cookies/index.d.ts",
       "./node_modules/@types/express-serve-static-core/index.d.ts",
       "./node_modules/@types/express/index.d.ts",
+      "./node_modules/@types/fs-extra/index.d.ts",
       "./node_modules/@types/glob/index.d.ts",
       "./node_modules/@types/http-assert/index.d.ts",
       "./node_modules/@types/http-errors/index.d.ts",
@@ -2490,7 +2533,9 @@
       "./node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "./node_modules/typescript/lib/lib.scripthost.d.ts",
       "./node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "./src/commands/as3.ts",
       "./src/commands/connect.ts",
+      "./src/commands/declare.ts",
       "./src/commands/disconnect.ts",
       "./src/commands/hello.ts",
       "./src/commands/info.ts",

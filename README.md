@@ -8,10 +8,31 @@ f5 oss cli
 [![Downloads/week](https://img.shields.io/npm/dw/f5-entoli.svg)](https://npmjs.org/package/f5-entoli)
 [![License](https://img.shields.io/npm/l/f5-entoli.svg)](https://github.com/f5devcentral/f5-entoli/blob/master/package.json)
 
+# notes
+
+command (english) => εντολή (entoli -> greek)
+
+F5 Open sourcee command line interface based on vscode-f5 extension capabilities
+
+## Goals
+
+- provide an open source cli that utilizes functionality found in vscode-f5 and vscode-f5-chariot that can be integrated in other solutions like repo actions
+  - Can also be used with vscode to deploy an entire repo
+- mirror some of the original F5-cli functionality/flow
+  - <https://clouddocs.f5.com/sdk/f5-cli/>
+  - <https://github.com/f5devcentral/f5-sdk-python>
+  - <https://hub.docker.com/r/f5devcentral/f5-cli>
+- take heavy inspiration from kubectl form and function
+  - heavy focus on declarative work flows
+  - support different config object output types like json and yaml
+  - support yaml input files
+
+# Table of Contents
 <!-- toc -->
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
 <!-- usage -->
 ```sh-session
@@ -26,12 +47,14 @@ USAGE
 ...
 ```
 <!-- usagestop -->
+
 # Commands
 <!-- commands -->
+* [`entoli -h [FILE]`](#entoli--h-file)
 * [`entoli as3 [FILE]`](#entoli-as3-file)
 * [`entoli connect DEVICE USERNAME [PASSWORD]`](#entoli-connect-device-username-password)
 * [`entoli declare [FILE]`](#entoli-declare-file)
-* [`entoli disconnect [FILE]`](#entoli-disconnect-file)
+* [`entoli disconnect`](#entoli-disconnect)
 * [`entoli hello`](#entoli-hello)
 * [`entoli help [COMMAND]`](#entoli-help-command)
 * [`entoli info`](#entoli-info)
@@ -88,18 +111,16 @@ OPTIONS
 
 _See code: [src/commands/declare.ts](https://github.com/f5devcentral/f5-entoli/blob/v0.1.0/src/commands/declare.ts)_
 
-## `entoli disconnect [FILE]`
+## `entoli disconnect`
 
 describe the command here
 
 ```
 USAGE
-  $ entoli disconnect [FILE]
+  $ entoli disconnect
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 ```
 
 _See code: [src/commands/disconnect.ts](https://github.com/f5devcentral/f5-entoli/blob/v0.1.0/src/commands/disconnect.ts)_

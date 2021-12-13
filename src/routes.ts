@@ -33,7 +33,8 @@ router.get('/disconnect', async (ctx, next) => {
     socket.close();
 })
 
-router.get('/as3/post', async (ctx, next) => {
+router.post('/as3', async (ctx, next) => {
+    console.log('incoming as3 post body', ctx.request.)
     ctx.body = { msg: 'posting as3 started' };
     console.log('\n')
     timer()
