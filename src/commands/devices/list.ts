@@ -1,13 +1,7 @@
 import {Command, flags} from '@oclif/command'
 
-export default class Hello extends Command {
+export default class DevicesList extends Command {
   static description = 'describe the command here'
-
-  static examples = [
-    `$ entoli hello
-hello world from ./src/hello.ts!
-`,
-  ]
 
   static flags = {
     help: flags.help({char: 'h'}),
@@ -17,15 +11,15 @@ hello world from ./src/hello.ts!
     force: flags.boolean({char: 'f'}),
   }
 
-  // static args = [{name: 'file'}]
+  static args = [{name: 'file'}]
 
   async run() {
-    const {args, flags} = this.parse(Hello)
+    const {args, flags} = this.parse(DevicesList)
 
     const name = flags.name ?? 'world'
-    this.log(`hello ${name} from ./src/commands/hello.ts`)
-    // if (args.file && flags.force) {
-    //   this.log(`you input --force and --file: ${args.file}`)
-    // }
+    this.log(`hello ${name} from /home/ted/projects/f5-entoli/src/commands/devices/list.ts`)
+    if (args.file && flags.force) {
+      this.log(`you input --force and --file: ${args.file}`)
+    }
   }
 }

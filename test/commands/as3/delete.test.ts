@@ -1,16 +1,16 @@
 import {expect, test} from '@oclif/test'
 
-describe('disconnect', () => {
+describe('as3:delete', () => {
   test
   .stdout()
-  .command(['disconnect'])
+  .command(['as3:delete'])
   .it('runs hello', ctx => {
     expect(ctx.stdout).to.contain('hello world')
   })
 
   test
   .stdout()
-  .command(['disconnect', '--name', 'jeff'])
+  .command(['as3:delete', '--name', 'jeff'])
   .it('runs hello --name jeff', ctx => {
     expect(ctx.stdout).to.contain('hello jeff')
   })
