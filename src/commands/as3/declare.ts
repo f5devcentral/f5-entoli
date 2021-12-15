@@ -2,21 +2,8 @@ import { Command, flags } from '@oclif/command'
 import cli from 'cli-ux'
 import * as fs from 'fs-extra'
 import * as path from 'path'
-import request from 'http'
-import Logger from 'f5-conx-core/dist/logger'
-import { ExtHttp, F5Client } from 'f5-conx-core'
-import { EventEmitter } from 'events';
-
-
-const eventer = new EventEmitter();
-export const extHttp = new ExtHttp({ rejectUnauthorized: false, eventEmitter: eventer });
-
-export const conxLog = new Logger('F5_ENTOLI_LOG');
-conxLog.console = false;
-
-const cacheDir = path.join(__dirname, 'cache');
-// process.env.F5_ENTOLI_AGENT = `${packageJson.name}/${packageJson.version}`;
-// process.env.F5_ENTOLI_CACHE = cacheDir;
+import { F5Client } from 'f5-conx-core'
+import { extHttp, conxLog, eventer } from '../../f5Worker'
 
 
 export default class Declare extends Command {
@@ -53,7 +40,7 @@ export default class Declare extends Command {
 
   static args = [{
     name: 'file',
-    description: 'folder or file to declare'
+    description: 'as3 file to declare'
   }]
 
 
@@ -61,7 +48,7 @@ export default class Declare extends Command {
   async run() {
     const { args, flags } = this.parse(Declare)
 
-    extHttp.cacheDir = this.config.cacheDir;
+    
 
     const declaration = await fs.readJSONSync(args.file)
 
@@ -87,16 +74,7 @@ export default class Declare extends Command {
 
     // extHttp.
 
-    eventer
-      .on('log-http-request', msg => conxLog.httpRequest(msg))
-      .on('log-http-response', msg => conxLog.httpResponse(msg))
-      .on('log-debug', msg => conxLog.debug(msg))
-      .on('log-info', msg => conxLog.info(msg))
-      .on('log-warn', msg => conxLog.warn(msg))
-      .on('log-error', msg => conxLog.error(msg))
-      .on('failedAuth', msg => {
-        conxLog.error('Failed Authentication Event!', msg);
-      });
+
 
 
     const device = new F5Client(
