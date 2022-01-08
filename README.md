@@ -1,14 +1,14 @@
-f5-entoli
-=========
-
-f5 oss cli
-
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/f5-entoli.svg)](https://npmjs.org/package/f5-entoli)
 [![Downloads/week](https://img.shields.io/npm/dw/f5-entoli.svg)](https://npmjs.org/package/f5-entoli)
 [![License](https://img.shields.io/npm/l/f5-entoli.svg)](https://github.com/f5devcentral/f5-entoli/blob/master/package.json)
 
-# notes
+f5-entoli
+=========
+
+f5 open source software command line interface
+
+## Meaning
 
 command (english) => εντολή (entoli -> greek)
 
@@ -53,16 +53,14 @@ USAGE
 # Commands
 <!-- commands -->
 * [`entoli as3:declare [FILE]`](#entoli-as3declare-file)
-* [`entoli as3:delete [FILE]`](#entoli-as3delete-file)
+* [`entoli as3:delete`](#entoli-as3delete)
 * [`entoli autocomplete [SHELL]`](#entoli-autocomplete-shell)
 * [`entoli commands`](#entoli-commands)
-* [`entoli connect DEVICE USERNAME [PASSWORD]`](#entoli-connect-device-username-password)
 * [`entoli declare`](#entoli-declare)
-* [`entoli devices:add [FILE]`](#entoli-devicesadd-file)
-* [`entoli devices:list [FILE]`](#entoli-deviceslist-file)
-* [`entoli disconnect`](#entoli-disconnect)
+* [`entoli devices:add [DEVICE]`](#entoli-devicesadd-device)
+* [`entoli devices:list`](#entoli-deviceslist)
 * [`entoli help [COMMAND]`](#entoli-help-command)
-* [`entoli status`](#entoli-status)
+* [`entoli info`](#entoli-info)
 
 ## `entoli as3:declare [FILE]`
 
@@ -73,7 +71,7 @@ USAGE
   $ entoli as3:declare [FILE]
 
 ARGUMENTS
-  FILE  folder or file to declare
+  FILE  as3 file to declare
 
 OPTIONS
   -d, --device=device      (required) device to as3 with
@@ -86,18 +84,23 @@ OPTIONS
 
 _See code: [src/commands/as3/declare.ts](https://github.com/f5devcentral/f5-entoli/blob/v0.1.0/src/commands/as3/declare.ts)_
 
-## `entoli as3:delete [FILE]`
+## `entoli as3:delete`
 
 describe the command here
 
 ```
 USAGE
-  $ entoli as3:delete [FILE]
+  $ entoli as3:delete
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -d, --device=device      (required) device to as3 with
+  -h, --help               show CLI help
+  -l, --listTenant         list existing tenants to select
+  -p, --password=password  password for provided username
+  -t, --tenant=tenant      as3 tenant to delete/remove
+  -u, --username=username  [default: admin] username to connect to device with
+  -v, --provider=provider  [default: tmos] device provider
+  --port=port              [default: 443] device port
 ```
 
 _See code: [src/commands/as3/delete.ts](https://github.com/f5devcentral/f5-entoli/blob/v0.1.0/src/commands/as3/delete.ts)_
@@ -149,25 +152,6 @@ OPTIONS
 
 _See code: [@oclif/plugin-commands](https://github.com/oclif/plugin-commands/blob/v2.0.1/src/commands/commands.ts)_
 
-## `entoli connect DEVICE USERNAME [PASSWORD]`
-
-Connect/Discover
-
-```
-USAGE
-  $ entoli connect DEVICE USERNAME [PASSWORD]
-
-ARGUMENTS
-  DEVICE    f5 device to connect to
-  USERNAME  username to connect with
-  PASSWORD  password to go with username
-
-OPTIONS
-  -h, --help  show CLI help
-```
-
-_See code: [src/commands/connect.ts](https://github.com/f5devcentral/f5-entoli/blob/v0.1.0/src/commands/connect.ts)_
-
 ## `entoli declare`
 
 declare environment via AS3/DO
@@ -186,34 +170,34 @@ ALIASES
 
 _See code: [src/commands/declare.ts](https://github.com/f5devcentral/f5-entoli/blob/v0.1.0/src/commands/declare.ts)_
 
-## `entoli devices:add [FILE]`
+## `entoli devices:add [DEVICE]`
 
 describe the command here
 
 ```
 USAGE
-  $ entoli devices:add [FILE]
+  $ entoli devices:add [DEVICE]
+
+ARGUMENTS
+  DEVICE  device/hostname/ip
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help               show CLI help
+  -p, --password=password  password
 ```
 
 _See code: [src/commands/devices/add.ts](https://github.com/f5devcentral/f5-entoli/blob/v0.1.0/src/commands/devices/add.ts)_
 
-## `entoli devices:list [FILE]`
+## `entoli devices:list`
 
-describe the command here
+list known devices -> known devices have cached passwords
 
 ```
 USAGE
-  $ entoli devices:list [FILE]
+  $ entoli devices:list
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 ```
 
 _See code: [src/commands/devices/list.ts](https://github.com/f5devcentral/f5-entoli/blob/v0.1.0/src/commands/devices/list.ts)_
@@ -248,6 +232,4 @@ OPTIONS
 ```
 
 _See code: [src/commands/info.ts](https://github.com/f5devcentral/f5-entoli/blob/v0.1.0/src/commands/info.ts)_
-
-
 <!-- commandsstop -->

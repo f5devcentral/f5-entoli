@@ -2,7 +2,7 @@ import { Command, flags } from '@oclif/command'
 import cli from 'cli-ux'
 import * as fs from 'fs-extra'
 import * as path from 'path'
-import { F5Client } from 'f5-conx-core'
+import { As3Dec, As3Declaration, F5Client } from 'f5-conx-core'
 import { extHttp, conxLog, eventer } from '../../f5Worker'
 
 
@@ -36,11 +36,25 @@ export default class Declare extends Command {
       default: 'tmos',
       description: 'device provider'
     }),
+    file: flags.string({
+      char: 'f',
+      description: 'as3 file to declare',
+      multiple: true,
+    }),
+    folder: flags.string({
+      char: 'F',
+      description: 'as3 folder to declare ( filter=*.as3.json )',
+      multiple: true,
+    }),
+    filter: flags.string({
+      char: 'x',
+      description: 'file filter for folder flag',
+      default: '*.as3.json'
+    })
   }
 
   static args = [{
     name: 'file',
-    description: 'as3 file to declare'
   }]
 
 
@@ -48,9 +62,40 @@ export default class Declare extends Command {
   async run() {
     const { args, flags } = this.parse(Declare)
 
-    
+    const decs: {
+      path: string;
+      dec: As3Declaration
+    }[] = [];
 
-    const declaration = await fs.readJSONSync(args.file)
+    // 1. if files, read files in
+    // 2. if folders, read in files from folders (using filter)
+    // 3. confirm declarations with schema? (maybe)
+    // 4. connect to f5
+    // 5. deploy declarations
+
+    // did we get a file argument (not flag)?
+    if(args.file) {
+      const dec = await fs.readJSONSync(args.file)
+      decs.push({ path: args.file, dec })
+    }
+
+    if(flags.file) {
+      flags.file.map( async file => {
+
+        const dec = await fs.readJSONSync(file)
+        decs.push({ path: file, dec })
+      })
+    }
+    
+    
+    if(flags.folder) {
+      flags.folder.map( async path => {
+
+        const dec = await fs.readJSONSync(path)
+        decs.push({ path, dec })
+      })
+    }
+
 
     // re-assing this/cli logging function
     const cliLogger = this.log;
@@ -100,7 +145,7 @@ export default class Declare extends Command {
 
     if (device.as3) {
       conxLog.info('sending as3')
-      await device.as3.postDec(declaration)
+      await device.as3.postDec(decs[0].dec)
         .then(resp => {
           const results = resp.data.results;
 
