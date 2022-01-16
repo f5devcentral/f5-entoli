@@ -742,7 +742,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/as3/declare.ts": {
-        "version": "33a53a9937bdb9c82630a201345d4de4596273a02f5a7402cf2694c54f35b8fd",
+        "version": "5f25885b1748b87b6da44c92b329dbb16ebf840a715f74eebdc9d24fb2e72441",
         "signature": "8d2b0d814c06c0ed6ecfec983a61baa3e3ec3ba15124c53e3f70c537c7631af8",
         "affectsGlobalScope": false
       },

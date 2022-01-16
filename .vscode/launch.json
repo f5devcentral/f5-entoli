@@ -29,10 +29,11 @@
       ],
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": [
-        "--opts",
-        "${workspaceFolder}/test/mocha.opts",
+        "-r",
+        "ts-node/register",
         "--timeout",
         "999999",
+        "--colors",
         "${file}"
       ],
       "console": "integratedTerminal",
@@ -41,5 +42,3 @@
     }
   ]
 }
-
-// 1Zw97v819077246321

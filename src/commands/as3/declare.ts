@@ -2,8 +2,9 @@ import { Command, flags } from '@oclif/command'
 import cli from 'cli-ux'
 import * as fs from 'fs-extra'
 import * as path from 'path'
-import { As3Dec, As3Declaration, F5Client } from 'f5-conx-core'
+import { As3Declaration, F5Client } from 'f5-conx-core'
 import { extHttp, conxLog, eventer } from '../../f5Worker'
+import minimatch from 'minimatch';
 
 
 export default class Declare extends Command {
@@ -62,41 +63,6 @@ export default class Declare extends Command {
   async run() {
     const { args, flags } = this.parse(Declare)
 
-    const decs: {
-      path: string;
-      dec: As3Declaration
-    }[] = [];
-
-    // 1. if files, read files in
-    // 2. if folders, read in files from folders (using filter)
-    // 3. confirm declarations with schema? (maybe)
-    // 4. connect to f5
-    // 5. deploy declarations
-
-    // did we get a file argument (not flag)?
-    if(args.file) {
-      const dec = await fs.readJSONSync(args.file)
-      decs.push({ path: args.file, dec })
-    }
-
-    if(flags.file) {
-      flags.file.map( async file => {
-
-        const dec = await fs.readJSONSync(file)
-        decs.push({ path: file, dec })
-      })
-    }
-    
-    
-    if(flags.folder) {
-      flags.folder.map( async path => {
-
-        const dec = await fs.readJSONSync(path)
-        decs.push({ path, dec })
-      })
-    }
-
-
     // re-assing this/cli logging function
     const cliLogger = this.log;
 
@@ -105,22 +71,74 @@ export default class Declare extends Command {
       cliLogger(x);
     };
 
+    const decs: {
+      path: string;
+      dec: As3Declaration
+    }[] = [];
+
+    // did we get a file argument (not flag)?
+    if (args.file) {
+      const filePath = args.file
+      try {
+        decs.push({
+          path: filePath,
+          dec: fs.readJSONSync(filePath)
+        })
+      } catch (e) {
+        this.log(`could not read/jsonify ${filePath}`)
+      }
+    }
+
+    // loop through folders and read in files with filter
+    if (flags.folder) {
+      flags.folder.map(async dirPath => {
+        fs.readdirSync(dirPath)
+          .map(item => {
+            const filePath = path.join(dirPath, item)
+            const found = minimatch(item, flags.filter)
+            // debugger;
+            if (found) {
+              // try to read the file and parse to json
+              try {
+                decs.push({
+                  path: filePath,
+                  dec: fs.readJSONSync(filePath)
+                })
+              } catch (e) {
+                this.log(`could not read/jsonify ${filePath}`)
+              }
+            }
+          })
+      });
+    }
+
+
+    // add in any specific files
+    if (flags.file) {
+      flags.file.map(async filePath => {
+        try {
+          decs.push({
+            path: filePath,
+            dec: fs.readJSONSync(filePath)
+          })
+        } catch (e) {
+          this.log(`could not read/jsonify ${filePath}`)
+        }
+      })
+    }
+
+
+    // validate declarations with schema?
+
     // if no password, prompt user
     if (!flags.password) {
       flags.password = await cli.prompt('Password?', { type: 'hide' })
     }
 
 
-    // if no flags/options -> try to deploy the repo (everything)
-
-    // if file arg
-
     conxLog.info('oclif/entoli cache dir', this.config.cacheDir);
 
-    // extHttp.
-
-
-
+    // debugger;
 
     const device = new F5Client(
       flags.device,
@@ -145,16 +163,18 @@ export default class Declare extends Command {
 
     if (device.as3) {
       conxLog.info('sending as3')
-      await device.as3.postDec(decs[0].dec)
-        .then(resp => {
-          const results = resp.data.results;
-
-          conxLog.info('as3-post-complete', resp.status, resp.statusText, results)
-
-        })
-        .catch(err => {
-          conxLog.error(err)
-        })
+      for await (const d of decs) {
+        conxLog.info(`posting ${d.path}`)
+        await device.as3.postDec(d.dec)
+          .then(resp => {
+            const results = resp.data.results;
+            conxLog.info('as3-post-complete', resp.status, resp.statusText, results)
+          })
+          .catch(err => {
+            conxLog.error(err);
+            throw err;
+          })
+      }
     }
 
     device.clearLogin();
